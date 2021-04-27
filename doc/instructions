@@ -1,0 +1,22 @@
+
+* Activate Environment
+python3 -m venv auth
+C:\dev\reactFlaskMsal>auth\scripts\activate
+
+
+* Run Flask
+flask run
+
+* List PIP libraries
+pip freeze
+
+* Install react-app 
+npx create-react-app .
+
+* Starts the development server.
+  npm run build
+    
+
+* Remove git ignore cache
+git rm -rf --cached .
+git add .
