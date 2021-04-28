@@ -3,12 +3,12 @@
 python3 -m venv auth
 C:\dev\reactFlaskMsal>auth\scripts\activate
 
-
 * Run Flask
+set flask_debug=1
 flask run
 
 * List PIP libraries
-pip freeze
+pip freeze > requirements.txt
 
 * Install react-app 
 npx create-react-app .
@@ -20,3 +20,12 @@ npx create-react-app .
 * Remove git ignore cache
 git rm -rf --cached .
 git add .
+
+* Check git remote
+git remote -v 
+
+* Chang git remote
+git remote set-url origin https://github.com/vincentcccheng/reactFlaskMSal.git
+
+* Run React local (go to frontend directory)
+npm run start 

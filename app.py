@@ -61,10 +61,11 @@ def login():
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
     try:
-        print(app_config.REDIRECT_PATH)
+        print("Entering " + app_config.REDIRECT_PATH)
         cache = _load_cache()
         result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(
             session.get("flow", {}), request.args)
+        print("passing " + app_config.REDIRECT_PATH)
         if "error" in result:
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
@@ -73,6 +74,7 @@ def authorized():
         _save_cache(cache)
     except ValueError:  # Usually caused by CSRF
         pass  # Simply ignore them
+        return render_template("auth_error.html", result={"error" : "Value Error", "error_description":"Not signed in yet !!"})
     return redirect(url_for("entry"))
 
 @app.route("/logout")
@@ -83,7 +85,9 @@ def logout():
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
 @app.route("/entry")
-def entry():        
+def entry():
+    if not session.get("user"):
+       return redirect(url_for("login"))
     return send_from_directory(app.static_folder,'index.html')
 
 @app.route("/graphcall")
